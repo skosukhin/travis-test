@@ -1,0 +1,34 @@
+SHELL= @SHELL@
+FC= @FC@
+INSTALL= @INSTALL@
+FCFLAGS= @FCFLAGS@
+LDFLAGS= @LDFLAGS@
+LIBS= @LIBS@
+
+prefix:= @prefix@
+exec_prefix:= @exec_prefix@
+
+f90_srcs:= main.f90
+
+.SUFFIXES:
+.PHONY: all mostlyclean clean distclean install
+
+all: test@EXEEXT@
+
+mostlyclean:
+	rm -f test@EXEEXT@ $(f90_srcs:.f90=.@OBJEXT@)
+
+clean: mostlyclean
+
+distclean: clean
+	rm -f config.log config.status Makefile
+
+install: all
+	$(INSTALL) -d $(DESTDIR)@bindir@ && $(INSTALL) test@EXEEXT@ $(DESTDIR)@bindir@/test@EXEEXT@
+
+test@EXEEXT@: $(f90_srcs:.f90=.@OBJEXT@)
+	$(FC) -o $@ $(FCFLAGS) $(LDFLAGS) $^ $(LIBS)
+
+%.@OBJEXT@: %.f90
+	$(FC) -o $@ -c $(FCFLAGS) @FCFLAGS_f90@ $<
+

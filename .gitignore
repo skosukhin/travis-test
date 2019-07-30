@@ -1,0 +1,14 @@
+# Autoreconf stage files:
+/autom4te.cache
+/configure
+
+# Configure stage files:
+/Makefile
+/config.cache
+/config.log
+/config.status
+
+# Build stage files:
+*.o
+/test
+
