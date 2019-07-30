@@ -1,0 +1,14 @@
+branches:
+  only:
+  - master
+
+language: minimal
+
+addons:
+  apt:
+    packages:
+    - gfortran
+    - libnetcdff-dev
+
+script: ./autogen.sh && ./configure && make -j4 && ./test && sudo make install && /usr/local/bin/test && make distclean
+
